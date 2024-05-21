@@ -1,0 +1,44 @@
+<div class="modal-content">
+  <div class="line1">
+    <h2>Création de Projet</h2>
+    <button nz-button nzType="text" nzShape="circle" (click)="closeModal()">
+      <i nz-icon nzType="close" nzTheme="outline"></i>
+    </button>
+  </div>
+  <form (ngSubmit)="createProject()" class="modal-body">
+    <div class="form-group">
+      <label for="nom">Nom du Projet:</label>
+      <input nz-input type="text" id="nom" name="nom" [(ngModel)]="newProject.nom" required />
+    </div>
+    <div class="form-group">
+      <label for="budget_alloue">Budget Alloué:</label>
+      <input nz-input type="text" id="budget_alloue" name="budget_alloue" [(ngModel)]="newProject.budget_alloue" required />
+    </div>
+    <div class="form-group">
+      <label for="budget_depense">Budget Dépensé:</label>
+      <input nz-input type="text" id="budget_depense" name="budget_depense" [(ngModel)]="newProject.budget_depense" required />
+    </div>
+    <div class="form-group">
+      <label for="date_debut">Date de Début:</label>
+      <nz-date-picker nzFormat="yyyy-MM-dd" id="date_debut" name="date_debut" [(ngModel)]="newProject.date_debut"
+      (ngModelChange)="onDateDChange($event)"
+        [nzFormat]="'yyyy-MM-dd'"  required></nz-date-picker>
+    </div>
+    <div class="form-group">
+      <label for="date_fin_prevue">Date de Fin Prévue:</label>
+      <nz-date-picker nzFormat="yyyy-MM-dd" id="date_fin_prevue" name="date_fin_prevue" [(ngModel)]="newProject.date_fin_prevue"
+      (ngModelChange)="onDateFChange($event)"
+        [nzFormat]="'yyyy-MM-dd'" required></nz-date-picker>
+    </div>
+    <div class="form-group">
+      <label for="objectif">Objectifs du Projet:</label>
+      <input nz-input type="text" id="objectif" name="objectif" [(ngModel)]="newProject.objectif" required />
+    </div>
+    <div class="form-group">
+      <label for="risques">Risques du Projet:</label>
+      <input nz-input type="text" id="risques" name="risques" [(ngModel)]="newProject.risques" required />
+    </div>
+
+    <button nz-button nzType="primary" class="mx-auto">Créer Projet</button>
+  </form>
+</div>

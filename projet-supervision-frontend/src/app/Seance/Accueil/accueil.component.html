@@ -1,0 +1,93 @@
+<nz-layout>
+
+  <app-topnavbar></app-topnavbar>
+  <nz-layout nzHasSider>
+    
+    <nz-sider nzWidth="280px">
+      <app-leftnavbar></app-leftnavbar>
+    </nz-sider>
+
+    <div nz-col nzXs="24" nzSm="24" nzMd="18" nzLg="18" nzXl="18">
+      <section class="ftco-section">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-12">
+              <div style="margin: 15px">
+                <h2 style="display: inline; margin-right: 515px">Liste des Séances de Supervision</h2>
+                <a nz-button nzType="primary" style="padding: 5px; color: white" routerLink="/seance/new">Nouvelle Séance</a>
+              </div>
+              <div class="table-wrap">
+                <nz-table [nzData]="seances">
+                  <thead>
+                    <tr>
+                      <th>Référence</th>
+                      <th>Date de Supervision</th>
+                      <th>Date de Création</th>
+                      <th>Nom du Superviseur</th>
+                      <th>Statut</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let seance of seances">
+                      <td>{{ seance.reference }}</td>
+                      <td>{{ seance.date_supervision }}</td>
+                      <td>{{ seance.date_creation }}</td>
+                      <td>{{ seance.nom_chef_projet }}</td>
+                      <td>
+                        <span nz-tooltip nzTooltipTitle=" {{getTitleTooltip(seance.statut)}}"><nz-tag [nzColor]="seance.statut === 'valide' ? 'success' : 'error'">
+                          {{ seance.statut }}
+                          </nz-tag> </span>
+                      </td>
+                      <td>
+                        <div class="dropdown">
+                          <a
+                            class="dropdown-toggle"
+                            href="#"
+                            id="userDropdown"
+                            role="button"
+                            data-toggle="dropdown"
+                            aria-haspopup="true"
+                            aria-expanded="false"
+                          >
+                            <img src="assets/img/menu.png" />
+                          </a>
+                          <div
+                            class="dropdown-menu"
+                            aria-labelledby="userDropdown"
+                          >
+                            <a
+                              class="dropdown-item"
+                              (click)="validateSeance(seance.id)"
+                              >Valider</a
+                            >
+                            <a
+                              class="dropdown-item"
+                              (click)="onGererClick(seance.id)"
+                              >Gérer</a
+                            >
+                            <a
+                              class="dropdown-item"
+                              (click)="generatePdf(seance.id)"
+                              >Générer un rapport</a
+                            >
+                            <a
+                              class="dropdown-item"
+                              href="/rapport/{{ seance.id }}"
+                              >Voir les précédents rapports</a
+                            >
+
+                            <!--<button (click)="genererRapport(projetId)">Générer Rapport</button>-->
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </nz-table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </nz-layout>

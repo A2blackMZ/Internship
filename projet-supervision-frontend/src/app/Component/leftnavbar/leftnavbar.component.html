@@ -1,0 +1,38 @@
+<aside nz-layout="inline" style="height: 100vh" class="nz-menu-dark">
+  <nz-sider nzCollapsible [nzWidth]="80" nzWidth="100px">
+    <ul nz-menu nzMode="inline" class="nz-menu-dark">
+      <li nz-menu-item *ngIf="userRole === 'admin' || userRole === 'manager' || userRole === 'user'" routerLink="/dashboard">
+        <i nz-icon nzType="clock-circle" nzTheme="outline"></i>
+        <span>Dashboard</span>
+      </li>
+      <li nz-menu-item *ngIf="userRole === 'admin' || userRole === 'manager' || userRole === 'user'" routerLink="/projets">
+        <i nz-icon nzType="user" nzTheme="outline"></i>
+        <span>Gestion de Projet</span>
+      </li>
+      <li nz-menu-item *ngIf="userRole === 'admin'" routerLink="/seance">
+        <i nz-icon nzType="table" nzTheme="outline"></i>
+        <span>Séance de Supervision</span>
+      </li>
+      <li nz-menu-item *ngIf="userRole === 'admin' || userRole === 'manager' || userRole === 'user'" routerLink="/rapport">
+        <i nz-icon nzType="file-text" nzTheme="outline"></i>
+        <span>Rapports</span>
+      </li>
+      <li nz-menu-item *ngIf="userRole === 'admin' || userRole === 'manager' || userRole === 'user'" href="map-google.html">
+        <i nz-icon nzType="global" nzTheme="outline"></i>
+        <span>Historiques</span>
+      </li>
+      <li nz-menu-item *ngIf="userRole === 'admin'" routerLink="/users">
+        <i nz-icon nzType="team" nzTheme="outline"></i>
+        <span>Gestion des utilisateurs</span>
+      </li>
+      <li nz-menu-item href="blank.html">
+        <i nz-icon nzType="question-circle" nzTheme="outline"></i>
+        <span>Aide et support :</span>
+      </li>
+      <li nz-menu-item href="404.html">
+        <i nz-icon nzType="info-circle" nzTheme="outline"></i>
+        <span>Error 404</span>
+      </li>
+    </ul>
+  </nz-sider>
+</aside>

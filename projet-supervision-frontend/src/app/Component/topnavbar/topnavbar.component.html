@@ -1,0 +1,25 @@
+<nz-header class="nz-menu-dark ">
+  <div nz-row nzAlign="middle" nzJustify="space-between">
+    <div nz-col nzSpan="6">
+      <a routerLink="/">
+        <img src="assets/img/logoPort.png" style="width: 170px" />
+      </a>
+    </div>
+    <div nz-col nzFlex nzOffset="2" style="text-align: right;">
+      <a nz-dropdown [nzDropdownMenu]="menu" nz-tooltip nzTooltipTitle="User Menu">
+        <i nz-icon nzType="user" nzTheme="outline"></i>
+        {{ userName }}
+        <span nz-icon nzType="down"></span>
+      </a>
+      <nz-dropdown-menu #menu="nzDropdownMenu">
+        <ul nz-menu>
+          <li nz-menu-item>Mon profil</li>
+          <li nz-menu-item (click)="logout()">Se déconnecter</li>
+        </ul>
+      </nz-dropdown-menu>
+      <a nz-tooltip nzTooltipTitle="Notifications" [routerLink]="['/notif', id]">
+        <i nz-icon nzType="bell" nzTheme="outline"></i>
+      </a>
+    </div>
+  </div>
+</nz-header>

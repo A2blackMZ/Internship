@@ -1,0 +1,385 @@
+<nz-spin *ngIf="loading" nzSimple></nz-spin>
+
+
+  <nz-layout>
+    <app-topnavbar></app-topnavbar>
+    <nz-layout nzHasSider>
+      
+      <nz-sider nzWidth="280px">
+        <app-leftnavbar></app-leftnavbar>
+      </nz-sider>
+
+  
+    <nz-content>
+      <div *ngIf="loading" class="loading-container">
+        <img src="/assets/loading.gif" alt="Chargement en cours..." />
+      </div>
+      
+      <div style="margin: 15px">
+        <h2 style="display: inline; margin-right: 515px">Informations du Projet</h2>
+        <a nz-button nzType="primary" style="padding: 5px; color: white" routerLink="/seance/new">Nouvelle Séance</a>
+      </div>
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-4">
+            <div class="card card-margin">
+              <div class="card-header no-border">
+                <h5 class="card-title" *ngIf="project">{{ project.nom }}</h5>
+              </div>
+              <div class="card-body pt-0">
+                <div class="widget-49">
+                  <ul class="widget-49-meeting-points">
+                    <li class="widget-49-meeting-item">
+                      <strong>Objectifs du Projet :</strong>
+                      <span *ngIf="project">{{ project.objectif }}</span>
+                    </li>
+                    <li class="widget-49-meeting-item">
+                      <strong>Risques du Projet:</strong>
+                      <span *ngIf="project">{{ project.risques }}</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <div class="card card-margin">
+              <div class="card-header no-border">
+                <h5 class="card-title">Date</h5>
+              </div>
+              <div class="card-body pt-0">
+                <div class="widget-49">
+                  <div class="widget-49-title-wrapper">
+                    <div class="widget-49-date-primary">
+                      <span class="widget-49-date-day"><img src="assets/img/calendar.png"/></span>
+                    </div>
+                    <div class="widget-49-meeting-info">
+                      <span class="widget-49-pro-title" *ngIf="project">
+                        <strong>Début :</strong> {{ project.date_debut }}
+                      </span>
+                      <span class="widget-49-pro-title" *ngIf="project">
+                        <strong>Fin (Prévue) :</strong> {{ project.date_fin_prevue }}
+                      </span>
+                      <br /><br />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <div class="card card-margin">
+              <div class="card-header no-border">
+                <h5 class="card-title">Budget</h5>
+              </div>
+              <div class="card-body pt-0">
+                <div class="widget-49">
+                  <div class="widget-49-title-wrapper">
+                    <div class="widget-49-date-primary">
+                      <span class="widget-49-date-day"><img src="assets/img/coin1.png"/></span>
+                    </div>
+                    <div class="widget-49-meeting-info">
+                      <span class="widget-49-pro-title" *ngIf="project">
+                        <strong>Alloué:</strong> {{ project.budget_alloue }} FCFA
+                      </span>
+                      <span class="widget-49-pro-title" *ngIf="project">
+                        <strong>Dépensé:</strong> {{ project.budget_depense }} FCFA
+                      </span>
+                      <br /><br />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tâches du Projet -->
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6">
+            <nz-card>
+              <div nz-title>
+                <h2>Tâches du Projet</h2>
+              </div>
+              <div nz-body>
+                <button nz-button nzType="primary" (click)="openModalF()">Ajouter</button>
+                <nz-table [nzData]="tasks">
+                  <thead>
+                    <tr>
+                      <th>Nom de la Tâche</th>
+                      <th>Description</th>
+                      <th>État</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let task of tasks">
+                      <td>{{ task.nom }}</td>
+                      <td>{{ task.description }}</td>
+                      <td>
+                        <nz-badge [nzStatus]="getBadgeStatus(task.etat)">{{ task.etat }}</nz-badge>
+                      </td>
+                    
+                <td>
+                  <div class="dropdown">
+                    <a
+                      class="dropdown-toggle"
+                      href="#"
+                      id="userDropdown"
+                      role="button"
+                      data-toggle="dropdown"
+                      aria-haspopup="true"
+                      aria-expanded="false"
+                    >
+                      <img
+                        src="assets/img/menu.png"
+                        style="width: 20px; height: 20px"
+                      />
+                    </a>
+                    <div
+                      class="dropdown-menu"
+                      aria-labelledby="userDropdown"
+                    >
+                      <a
+                        class="dropdown-item"
+                        (click)="openModalUpdateTache(task)"
+                        >Modifier</a
+                      >
+                      <a
+                        class="dropdown-item"
+                        (click)="deleteTache(task.id)"
+                        >Supprimer</a
+                      >
+                    </div>
+                  </div>
+                </td>
+                    </tr>
+                  </tbody>
+                </nz-table>
+              </div>
+            </nz-card>
+          </div>
+          <!-- Comptes Rendus -->
+            <div class="col-md-6">
+                  <nz-card>
+                    <div nz-title>
+                      <h2>Comptes Rendus du Projet</h2>
+                    </div>
+                    <div nz-body>
+                      <button nz-button nzType="primary" (click)="openModalC()">Ajouter</button>
+                      <nz-table [nzData]="comptesRendus" nzBordered nzSize="middle">
+                        <thead>
+                          <tr>
+                            <th nzWidth="25%">Événement</th>
+                            <th nzWidth="25%">Difficultés</th>
+                            <th nzWidth="25%">Commentaires</th>
+                            <th nzWidth="15%">Date</th>
+                            <th nzWidth="10%">Actions</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let cr of comptesRendus">
+                            <td [innerHTML]="cr.evenement"></td>
+                      <td [innerHTML]="cr.difficultes"></td>
+                      <td [innerHTML]="cr.commentaires"></td>
+                      <td>{{ cr.date }}</td>
+                      <td>
+                        <div class="dropdown">
+                          <a
+                            class="dropdown-toggle"
+                            href="#"
+                            id="userDropdown"
+                            role="button"
+                            data-toggle="dropdown"
+                            aria-haspopup="true"
+                            aria-expanded="false"
+                          >
+                            <img
+                              src="assets/img/menu.png"
+                              style="width: 20px; height: 20px"
+                            />
+                          </a>
+                          <div
+                            class="dropdown-menu"
+                            aria-labelledby="userDropdown"
+                          >
+                            <a
+                              class="dropdown-item"
+                              (click)="openReportDetails(cr)"
+                              >Détails</a
+                            >
+                            <a
+                              class="dropdown-item"
+                              (click)="openModalUpdateReport(cr)"
+                              >Modifier</a
+                            >
+                            <a
+                              class="dropdown-item"
+                              (click)="deleteCompteRendu(cr.id)"
+                              >Supprimer</a
+                            >
+                            <!-- (click)="modifierTache(task)" -->
+                          </div>
+                        </div>
+                      </td>
+                          </tr>
+                        </tbody>
+                      </nz-table>
+                    </div>
+                  </nz-card>
+                </div>
+              </div>
+            </div>
+
+            <br><br>
+
+      <!-- Gestion des membres -->
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <nz-card>
+              <div nz-title>
+                <h2>Gestion des membres</h2>
+              </div>
+              <div nz-body>
+                <button nz-button nzType="primary" (click)="openModalU()">Ajouter</button>
+                <nz-table [nzData]="users">
+                  <thead>
+                    <tr>
+                      <th>Nom & Prénoms</th>
+                      <th>Email</th>
+                      <th>Rôle</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let user of users">
+                      <td>{{ user.name }}</td>
+                      <td>{{ user.email }}</td>
+                      <td>{{ user.role }}</td>
+                      <td>
+                        <div class="dropdown">
+                          <a
+                            class="dropdown-toggle"
+                            href="#"
+                            id="userDropdown"
+                            role="button"
+                            data-toggle="dropdown"
+                            aria-haspopup="true"
+                            aria-expanded="false"
+                          >
+                            <img
+                              src="assets/img/menu.png"
+                              style="width: 20px; height: 20px"
+                            />
+                          </a>
+                          <div
+                            class="dropdown-menu"
+                            aria-labelledby="userDropdown"
+                          >
+                            <a
+                              class="dropdown-item"
+                              (click)="openModalUpdateUser(user.id)"
+                              >Modifier</a
+                            >
+                          <!--
+                            <a
+                              class="dropdown-item"
+                              (click)="destroyUser(user.id)"
+                              >Supprimer</a
+                            >
+                          -->
+
+                            <a
+                              *ngIf="!user.blocked"
+                              class="dropdown-item"
+                              (click)="blockUser(user.id)"
+                            >
+                              Bloquer
+                            </a>
+                            <a
+                              *ngIf="user.blocked"
+                              class="dropdown-item"
+                              (click)="unblockUser(user.id)"
+                            >
+                              Débloquer
+                            </a>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </nz-table>
+              </div>
+            </nz-card>
+          </div>
+        </div>
+      </div>
+      <br><br>
+
+      <!-- Gestion des fichiers -->
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <nz-card>
+              <div nz-title>
+                <h2>Gestion des fichiers</h2>
+              </div>
+              <div nz-body>
+                <input type="file" (change)="onFileSelected($event)" />
+                <button nz-button nzType="primary" (click)="uploadFile()">Importer un fichier</button>
+                <nz-table [nzData]="fichiersImportes">
+                  <thead>
+                    <tr>
+                      <th>lien du fichier</th>
+                      <th>Date d'importation du fichier</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let fichier of fichiersImportes">
+                      <td>
+                        <a href="http://localhost:8000{{ fichier.lien }}" target="_blank">Voir le fichier</a>
+                      </td>
+                      <td>{{ fichier.dateImportation }}</td>
+                      <td>
+                        <div class="dropdown">
+                          <a
+                            class="dropdown-toggle"
+                            href="#"
+                            id="userDropdown"
+                            role="button"
+                            data-toggle="dropdown"
+                            aria-haspopup="true"
+                            aria-expanded="false"
+                          >
+                            <img
+                              src="assets/img/menu.png"
+                              style="width: 20px; height: 20px"
+                            />
+                          </a>
+                          <div
+                            class="dropdown-menu"
+                            aria-labelledby="userDropdown"
+                          >
+                            <a
+                              class="dropdown-item"
+                              (click)="destroyFile(fichier.id)"
+                              >Supprimer</a
+                            >
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </nz-table>
+              </div>
+            </nz-card>
+          </div>
+        </div>
+      </div>
+    </nz-content>
+  </nz-layout>
+</nz-layout>

@@ -1,0 +1,60 @@
+<nz-layout>
+
+      <app-topnavbar></app-topnavbar>
+      <nz-layout nzHasSider>
+        
+        <nz-sider nzWidth="280px">
+          <app-leftnavbar></app-leftnavbar>
+        </nz-sider>
+
+
+    <div nz-col nzXs="24" nzSm="24" nzMd="18" nzLg="18" nzXl="18">
+      <section class="ftco-section">
+
+    <div nz-col nzSpan="16">
+      <div class="shad">
+        <div *ngIf="currentStep === 1">
+          <h3>Étape 1: Informations de la Réunion</h3>
+
+          <form (ngSubmit)="nextStep()">
+            <div nz-form-item>
+              <label for="dateReunion" nz-form-item-required>Date de Réunion:</label>
+              <nz-date-picker
+                id="dateReunion"
+                name="dateReunion"
+                [(ngModel)]="newSeance.date_supervision"
+                (ngModelChange)="onDateChange($event)"
+                [nzFormat]="'yyyy-MM-dd'"
+              ></nz-date-picker>
+            </div>
+
+            <div nz-form-item>
+              <label for="heureReunion" nz-form-item-required>Heure de Réunion:</label>
+              <nz-time-picker id="heureReunion" name="heureReunion" [(ngModel)]="heureReunion"></nz-time-picker>
+            </div>
+
+            <button nz-button nzType="primary" type="submit">Next</button>
+          </form>
+        </div>
+
+        <div *ngIf="currentStep === 2">
+          <h3>Étape 2: Sélectionnez les Projets</h3>
+
+          <form (ngSubmit)="saveSelections()">
+            <div nz-form-item>
+              <label nz-form-item-required>Projets:</label>
+
+              <div *ngFor="let projet of projects" nz-form-control>
+                <label nz-checkbox [attr.name]="'projet-' + projet.nom" [(ngModel)]="projet.selectionne">{{ projet.nom }}</label>
+              </div>
+            </div>
+
+            <button nz-button (click)="previousStep()">Précédent</button>
+            <button nz-button nzType="primary" (click)="createSeance()">Enregistrer</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+  </div>
+  </nz-layout>

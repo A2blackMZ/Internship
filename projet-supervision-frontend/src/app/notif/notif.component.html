@@ -1,0 +1,38 @@
+<nz-spin *ngIf="loading" nzSimple></nz-spin>
+
+
+  <nz-layout>
+    <app-topnavbar></app-topnavbar>
+    <nz-layout nzHasSider>
+      
+      <nz-sider nzWidth="280px">
+        <app-leftnavbar></app-leftnavbar>
+      </nz-sider>
+
+  
+
+  <div class="col-md-9">
+    <h2>Notifications</h2>
+
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-4">
+          <nz-card class="card-margin">
+            <ng-container *ngIf="notifications.length > 0; else noNotifications">
+              <nz-list [nzDataSource]="notifications" [nzRenderItem]="notification">
+                <ng-template #notification let-notification>
+                  <nz-list-item>
+                    <h3>Vous aviez initiez un compte rendu pour le {{ notification.data.date }}</h3>
+                  </nz-list-item>
+                </ng-template>
+              </nz-list>
+            </ng-container>
+            <ng-template #noNotifications>
+              <h2><p>Aucune notification à afficher pour le moment.</p></h2>
+            </ng-template>
+          </nz-card>
+        </div>
+      </div>
+    </div>
+  </div>
+</nz-layout>
