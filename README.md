@@ -70,8 +70,7 @@ Dans le but d'améliorer l'efficacité du processus de supervision des projets d
 
 1. **Cloner le dépôt ou télécharger le code source**
    ```bash
-   git clone <url-du-dépôt-angular>
-   cd <nom-du-dépôt-angular>
+   cd projet-supervision-frontend
    ```
 
 2. **Assurez-vous d'avoir Node.js et Angular CLI version 16.1 ou supérieure installés**
